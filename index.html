@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Mood & Habit Tracker — Jurnal Kebiasaan Harian"
+    />
+    <title>Mood & Habit Tracker</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="dark">
+
+    <!-- ===== HEADER ===== -->
+    <header class="header" role="banner">
+      <div class="header__inner">
+        <div class="header__brand">
+          <span class="header__logo" aria-hidden="true">🌿</span>
+          <span class="header__title">Mood &amp; Habit Tracker</span>
+        </div>
+        <!-- Challenge 1: Theme Toggle -->
+        <button
+          id="themeToggle"
+          class="btn btn--icon"
+          aria-label="Ganti tema terang/gelap"
+          title="Ganti tema"
+        >
+          <span id="themeIcon">☀️</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ===== MAIN ===== -->
+    <main class="main">
+
+      <!-- ===== KOLOM KIRI ===== -->
+      <div class="col col--left">
+
+        <!-- GREETING CARD -->
+        <section class="card greeting-card" aria-label="Greeting dan Jam">
+          <div class="greeting__top">
+            <div class="greeting__info">
+              <p class="greeting__label" id="greetingText">Good Morning</p>
+              <h1 class="greeting__name" id="greetingName">!</h1>
+            </div>
+            <div class="clock" aria-live="polite" aria-atomic="true">
+              <p class="clock__time" id="clockTime">00:00:00</p>
+              <p class="clock__date" id="clockDate">—</p>
+            </div>
+          </div>
+
+          <!-- Challenge 2: Custom Name Form -->
+          <div class="name-form" id="nameForm" hidden>
+            <label for="nameInput" class="sr-only">Masukkan nama kamu</label>
+            <input
+              type="text"
+              id="nameInput"
+              class="input"
+              placeholder="Masukkan namamu..."
+              maxlength="30"
+              autocomplete="off"
+            />
+            <div class="name-form__actions">
+              <button id="saveNameBtn" class="btn btn--primary btn--sm">
+                Simpan
+              </button>
+              <button id="cancelNameBtn" class="btn btn--ghost btn--sm">
+                Batal
+              </button>
+            </div>
+          </div>
+
+          <button id="editNameBtn" class="btn btn--ghost btn--sm name-edit-btn">
+            ✏️ Ubah Nama
+          </button>
+        </section>
+
+        <!-- MOOD TRACKER CARD -->
+        <section class="card mood-card" aria-label="Mood Tracker">
+          <div class="card__header">
+            <h2 class="card__title">😊 Mood Hari Ini</h2>
+            <span class="mood-badge" id="todayMoodBadge">Belum dipilih</span>
+          </div>
+
+          <!-- 5 Tombol Mood -->
+          <div
+            class="mood-picker"
+            role="group"
+            aria-label="Pilih mood hari ini"
+          >
+            <button
+              class="mood-btn"
+              data-mood="great"
+              aria-label="Sangat Senang"
+              title="Sangat Senang"
+            >
+              <span class="mood-btn__emoji">😄</span>
+              <span class="mood-btn__label">Sangat Senang</span>
+            </button>
+            <button
+              class="mood-btn"
+              data-mood="happy"
+              aria-label="Senang"
+              title="Senang"
+            >
+              <span class="mood-btn__emoji">🙂</span>
+              <span class="mood-btn__label">Senang</span>
+            </button>
+            <button
+              class="mood-btn"
+              data-mood="neutral"
+              aria-label="Biasa"
+              title="Biasa"
+            >
+              <span class="mood-btn__emoji">😐</span>
+              <span class="mood-btn__label">Biasa</span>
+            </button>
+            <button
+              class="mood-btn"
+              data-mood="sad"
+              aria-label="Sedih"
+              title="Sedih"
+            >
+              <span class="mood-btn__emoji">😔</span>
+              <span class="mood-btn__label">Sedih</span>
+            </button>
+            <button
+              class="mood-btn"
+              data-mood="bad"
+              aria-label="Kecewa"
+              title="Kecewa"
+            >
+              <span class="mood-btn__emoji">😞</span>
+              <span class="mood-btn__label">Kecewa</span>
+            </button>
+          </div>
+
+          <!-- Mood Feedback -->
+          <div
+            class="mood-feedback"
+            id="moodFeedback"
+            role="status"
+            aria-live="polite"
+          ></div>
+
+          <!-- Riwayat 7 Hari -->
+          <div class="weekly-mood" aria-label="Riwayat mood 7 hari terakhir">
+            <p class="weekly-mood__title">Riwayat 7 Hari Terakhir</p>
+            <div class="weekly-mood__grid" id="weeklyMoodGrid">
+              <!-- Dirender oleh JS -->
+            </div>
+          </div>
+        </section>
+
+      </div><!-- /.col--left -->
+
+      <!-- ===== KOLOM KANAN ===== -->
+      <div class="col col--right">
+
+        <!-- HABIT TRACKER CARD -->
+        <section class="card habit-card" aria-label="Habit Tracker">
+          <div class="card__header">
+            <h2 class="card__title">✅ Kebiasaan Harian</h2>
+            <span class="badge badge--date" id="habitDate">—</span>
+          </div>
+
+          <!-- Progress Bar Dinamis -->
+          <div class="progress-wrap">
+            <div class="progress-info">
+              <span class="progress-info__text" id="progressLabel">
+                0 / 0 selesai
+              </span>
+              <span class="progress-info__pct" id="progressPct">0%</span>
+            </div>
+            <div
+              class="progress-bg"
+              role="progressbar"
+              aria-valuenow="0"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-label="Progress kebiasaan hari ini"
+              id="progressBg"
+            >
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+          </div>
+
+          <!-- Form Tambah Kebiasaan -->
+          <form class="habit-form" id="habitForm" novalidate>
+            <label for="habitInput" class="sr-only">Tambah kebiasaan baru</label>
+            <input
+              type="text"
+              id="habitInput"
+              class="input"
+              placeholder="Tambah kebiasaan baru..."
+              maxlength="80"
+              autocomplete="off"
+            />
+            <button
+              type="submit"
+              class="btn btn--primary"
+              aria-label="Tambah kebiasaan"
+            >
+              + Tambah
+            </button>
+          </form>
+
+          <!-- Habit Feedback (Challenge 3 & aksi lain) -->
+          <div
+            class="habit-feedback"
+            id="habitFeedback"
+            role="alert"
+            aria-live="polite"
+          ></div>
+
+          <!-- Daftar Kebiasaan -->
+          <ul
+            class="habit-list"
+            id="habitList"
+            role="list"
+            aria-label="Daftar kebiasaan"
+          >
+            <!-- Dirender oleh JS -->
+          </ul>
+
+          <!-- Empty State -->
+          <div class="habit-empty" id="habitEmpty" hidden>
+            <p>Belum ada kebiasaan. Yuk tambahkan! 🌱</p>
+          </div>
+        </section>
+
+      </div><!-- /.col--right -->
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer" role="contentinfo">
+      <p>Mood &amp; Habit Tracker &copy; 2025 — Dibuat dengan ❤️ dan Vanilla JS</p>
+    </footer>
+
+    <!-- ===== MODAL EDIT KEBIASAAN ===== -->
+    <div
+      class="modal-overlay"
+      id="editModal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="editModalTitle"
+      hidden
+    >
+      <div class="modal">
+        <h3 class="modal__title" id="editModalTitle">Edit Kebiasaan</h3>
+        <label for="editHabitInput" class="sr-only">Nama kebiasaan baru</label>
+        <input
+          type="text"
+          id="editHabitInput"
+          class="input"
+          maxlength="80"
+          autocomplete="off"
+        />
+        <div class="modal__actions">
+          <button id="editSaveBtn" class="btn btn--primary">Simpan</button>
+          <button id="editCancelBtn" class="btn btn--ghost">Batal</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div
+      class="toast"
+      id="toast"
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+    ></div>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
